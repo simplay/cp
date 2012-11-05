@@ -17,13 +17,20 @@ public class Ghostbuster implements Runnable{
 	public void run() {
 		while(true){
 			if(this.hauntedHouse.getTotalGhostCount() > 0) killGhost();
-			if(this.hasCountedTooManyGhosts()){
+			
+			if(this.hasCountedTooManyGhosts() && !this.hasGivenStopOrder()){
+				System.out.println("PWWWWWWWWWWWWWWWWWWW");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {}
+				
 				this.walkietalkie.sayStopMessage();
 				this.givenStopOrder = true;
 			}
 			
 			if(this.shouldTellFriendsWorkAgain()){
 				this.walkietalkie.sayContinueMessage();
+				this.givenStopOrder = false;
 			}
 			
 		}
@@ -58,7 +65,9 @@ public class Ghostbuster implements Runnable{
 	
 	private boolean shouldTellFriendsWorkAgain(){
 		boolean answer = false;
-		if(this.hasGivenStopOrder() && this.houseHasSpaceForGhosts())
+		System.out.println("so" + this.hasGivenStopOrder() + " space " + this.houseHasSpaceForGhosts());
+		if(this.hasGivenStopOrder() 
+				&& this.houseHasSpaceForGhosts())
 			answer = true;
 		return answer;
 	}

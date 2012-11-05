@@ -18,4 +18,13 @@ public class Walkietalkie {
 		return this.messageShouldStop;
 	}
 	
+	
+	public synchronized void waitForOrders(){
+		while(messageShouldStop){
+			try {
+				wait();
+			} catch (InterruptedException e) {}
+		}
+		
+	}
 }

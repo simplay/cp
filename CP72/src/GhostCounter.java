@@ -42,12 +42,10 @@ public class GhostCounter implements Runnable{
 	}
 	
 	private void StopLettingIn(){
-		synchronized(this.walkietalkie){
-			try {
-				wait();
-			} catch (InterruptedException e) {}
+		//synchronized(walkietalkie){
+			this.walkietalkie.waitForOrders();
 			System.out.println(this.name + " again is letting in ghosts");
-		}
+		//}
 	}
 	
 	private void waitTenMS(){
