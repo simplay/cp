@@ -19,15 +19,7 @@ public class Ghostbuster implements Runnable{
 	public void run() {
 		while(true){
 			perfromCheckEveryTwoSeconds();
-			if(totalGhostCount > 0) killGhost();
-			if(this.hasCountedTooManyGhosts() && !this.hasGivenStopOrder()){
-				
-				this.walkietalkie.sayStopMessage();
-				this.givenStopOrder = true;
-				System.out.println(name + " has reached its max tollerance " +
-						"and tells his friends to stop" );
-			}
-			
+			if(totalGhostCount > 0) killGhost();		
 			if(this.shouldTellFriendsWorkAgain()){
 				this.walkietalkie.sayContinueMessage();
 				this.givenStopOrder = false;
@@ -38,7 +30,14 @@ public class Ghostbuster implements Runnable{
 	
 	private void perfromCheckEveryTwoSeconds(){
 		if(TwoSecondsReached()){
-			totalGhostCount = this.hauntedHouse.getTotalGhostCount();	
+			totalGhostCount = this.hauntedHouse.getTotalGhostCount();
+			
+			if(this.hasCountedTooManyGhosts() && !this.hasGivenStopOrder()){
+				this.walkietalkie.sayStopMessage();
+				this.givenStopOrder = true;
+				System.out.println(name + " has reached its max tollerance " +
+						"and tells his friends to stop" );
+			}
 		}
 	}
 	
