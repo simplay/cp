@@ -18,14 +18,16 @@ public class Ghostbuster implements Runnable{
 	@Override
 	public void run() {
 		while(true){
-			perfromCheckEveryTwoSeconds();
-			if(totalGhostCount > 0) killGhost();		
-			if(this.shouldTellFriendsWorkAgain()){
-				this.walkietalkie.sayContinueMessage();
-				this.givenStopOrder = false;
-			}
-			waitTenMS();
+			this.perfromCheckEveryTwoSeconds();
+			if(this.hasEnoughGhosts()) this.killGhost();		
+			this.waitTenMS();
 		}
+	}
+	
+	private boolean hasEnoughGhosts(){
+		boolean answer = false;
+		if(this.totalGhostCount > 0) answer = true;
+		return answer;
 	}
 	
 	private void perfromCheckEveryTwoSeconds(){
@@ -37,6 +39,11 @@ public class Ghostbuster implements Runnable{
 				this.givenStopOrder = true;
 				System.out.println(name + " has reached its max tollerance " +
 						"and tells his friends to stop" );
+			}
+			
+			if(this.shouldTellFriendsWorkAgain()){
+				this.walkietalkie.sayContinueMessage();
+				this.givenStopOrder = false;
 			}
 		}
 	}
