@@ -19,11 +19,6 @@ public class Ghostbuster implements Runnable{
 			if(this.hauntedHouse.getTotalGhostCount() > 0) killGhost();
 			
 			if(this.hasCountedTooManyGhosts() && !this.hasGivenStopOrder()){
-				System.out.println("PWWWWWWWWWWWWWWWWWWW");
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {}
-				
 				this.walkietalkie.sayStopMessage();
 				this.givenStopOrder = true;
 			}
@@ -65,7 +60,6 @@ public class Ghostbuster implements Runnable{
 	
 	private boolean shouldTellFriendsWorkAgain(){
 		boolean answer = false;
-		System.out.println("so" + this.hasGivenStopOrder() + " space " + this.houseHasSpaceForGhosts());
 		if(this.hasGivenStopOrder() 
 				&& this.houseHasSpaceForGhosts())
 			answer = true;

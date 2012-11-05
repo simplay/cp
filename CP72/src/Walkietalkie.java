@@ -25,6 +25,5 @@ public class Walkietalkie {
 				wait();
 			} catch (InterruptedException e) {}
 		}
-		
 	}
 }
