@@ -1,9 +1,11 @@
+/**
+ * driver for the simulation
+ * 
+ * @author simplaY
+ */
 
 public class Main {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		Walkietalkie wt = new Walkietalkie();
 		HauntedHouse hauntedHouse = new HauntedHouse();

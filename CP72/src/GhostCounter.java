@@ -1,7 +1,9 @@
 /**
  * represents a ghost counting friend.
+ * he counts the ghosts inside his assigned house part
+ * and lets new ghosts inside the house with a certain probability.
+ * 
  * @author simplaY
- *
  */
 
 public class GhostCounter implements Runnable{
@@ -34,6 +36,11 @@ public class GhostCounter implements Runnable{
 		
 	}
 	
+	/**
+	 * has this friend received the order to stop
+	 * letting in new ghosts by the ghostbuster?
+	 * @return
+	 */
 	private boolean hasReceivedStoppingMessage(){
 		boolean answer = false;
 		boolean shouldIStop = this.walkietalkie.getMessage();
@@ -41,13 +48,18 @@ public class GhostCounter implements Runnable{
 		return answer ;
 	}
 	
+	/**
+	 * stops letting in new ghosts by waiting for new orders.
+	 */
 	private void StopLettingIn(){
-		//synchronized(walkietalkie){
-			this.walkietalkie.waitForOrders();
-			System.out.println(this.name + " again is letting in ghosts");
-		//}
+		this.walkietalkie.waitForOrders();
+		System.out.println(this.name + " again is letting in ghosts");
+
 	}
 	
+	/**
+	 * perfrom a 10ms sleep.
+	 */
 	private void waitTenMS(){
 		try {
 			Thread.sleep(10);
