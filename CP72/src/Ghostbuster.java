@@ -6,6 +6,8 @@ public class Ghostbuster implements Runnable{
 	private Walkietalkie walkietalkie;
 	private int maxGhostTollerance = 10;
 	private boolean givenStopOrder = false;
+	private int counter = 0;
+	private int totalGhostCount = 0;
 	
 	public Ghostbuster(String name, HauntedHouse house, Walkietalkie wt){
 		this.name = name;
@@ -16,8 +18,8 @@ public class Ghostbuster implements Runnable{
 	@Override
 	public void run() {
 		while(true){
-			if(this.hauntedHouse.getTotalGhostCount() > 0) killGhost();
-			
+			perfromCheckEveryTwoSeconds();
+			if(totalGhostCount > 0) killGhost();
 			if(this.hasCountedTooManyGhosts() && !this.hasGivenStopOrder()){
 				
 				this.walkietalkie.sayStopMessage();
@@ -34,14 +36,31 @@ public class Ghostbuster implements Runnable{
 		}
 	}
 	
+	private void perfromCheckEveryTwoSeconds(){
+		if(TwoSecondsReached()){
+			totalGhostCount = this.hauntedHouse.getTotalGhostCount();	
+		}
+	}
+	
 	private void killGhost(){
 		if (this.hasAFortyPercentProbability()) {
 			this.hauntedHouse.removeGhost();
+			totalGhostCount--;
 			System.err.println(this.name + " killed one ghost." 
 					+ "left: " + this.hauntedHouse.getTotalGhostCount());
 		}
 
 		
+	}
+	
+	private boolean TwoSecondsReached(){
+		boolean answer = false;
+		int secondsPassed = counter*200;
+		if(secondsPassed == 2000){
+			answer = true;
+			this.counter = 0;
+		}
+		return answer;
 	}
 	
 	private boolean hasAFortyPercentProbability(){
@@ -52,6 +71,7 @@ public class Ghostbuster implements Runnable{
 	}
 	
 	private void waitTenMS(){
+		counter++;
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {}
