@@ -4,7 +4,7 @@ public class Ghostbuster implements Runnable{
 	private String name;
 	private HauntedHouse hauntedHouse;
 	private Walkietalkie walkietalkie;
-	private int maxGhostTollerance = 100;
+	private int maxGhostTollerance = 10;
 	private boolean givenStopOrder = false;
 	
 	public Ghostbuster(String name, HauntedHouse house, Walkietalkie wt){
@@ -19,15 +19,18 @@ public class Ghostbuster implements Runnable{
 			if(this.hauntedHouse.getTotalGhostCount() > 0) killGhost();
 			
 			if(this.hasCountedTooManyGhosts() && !this.hasGivenStopOrder()){
+				
 				this.walkietalkie.sayStopMessage();
 				this.givenStopOrder = true;
+				System.out.println(name + " has reached its max tollerance " +
+						"and tells his friends to stop" );
 			}
 			
 			if(this.shouldTellFriendsWorkAgain()){
 				this.walkietalkie.sayContinueMessage();
 				this.givenStopOrder = false;
 			}
-			
+			waitTenMS();
 		}
 	}
 	
@@ -37,7 +40,7 @@ public class Ghostbuster implements Runnable{
 			System.err.println(this.name + " killed one ghost." 
 					+ "left: " + this.hauntedHouse.getTotalGhostCount());
 		}
-		waitTenMS();
+
 		
 	}
 	
